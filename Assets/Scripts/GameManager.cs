@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     this.state = 1;
     this.count = 3;
     this.count_start_time = Time.time;
+    AndroidVibraotr.Vibrate(10);
   }
   void _UpdateCounting(){
     if(Time.time - this.count_start_time > 1){
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
     this.state = 2;
     this.ui_count.text = "スマホを振る！！";
     this.ingame_start_time = Time.time;
-    AndroidVibraotr.Vibrate(100);
+    AndroidVibraotr.Vibrate(500);
   }
   void _UpdateInGame(){
     this.ui_score.text = Mathf.Floor(this.g_score) + "";
@@ -156,7 +157,11 @@ public class GameManager : MonoBehaviour
 
     this.ui_count.text = "タップしてもう一度";
 
-    AndroidVibraotr.Vibrate(1000);
+    // 誤タップ防止
+    this.isTouchDown = false;
+    this.isTouchUp = false;
+
+    AndroidVibraotr.Vibrate(1500);
     this.result_start_time = Time.time;
   }
   void _UpdateResult(){
@@ -166,8 +171,11 @@ public class GameManager : MonoBehaviour
   }
 
   void OnGUI(){
-      GUI.Label(new Rect(5, 0, 200, 40), "Gyro rotation rate " + m_Gyro.rotationRate, debugStyle);
-      GUI.Label(new Rect(5, 50, 200, 40), "Gyro attitude" + m_Gyro.attitude, debugStyle);
-      GUI.Label(new Rect(5, 100, 200, 40), "Gyro enabled : " + m_Gyro.enabled, debugStyle);
+      GUI.Label(new Rect(5, 800, 200, 40), "Gyro rotation rate " + m_Gyro.rotationRate, debugStyle);
+      GUI.Label(new Rect(5, 825, 200, 40), "Gyro attitude" + m_Gyro.attitude, debugStyle);
+      GUI.Label(new Rect(5, 850, 200, 40), "Gyro enabled : " + m_Gyro.enabled, debugStyle);
+      GUI.Label(new Rect(5, 875, 200, 40), "Gyro gravity " + m_Gyro.gravity, debugStyle);
+      GUI.Label(new Rect(5, 900, 200, 40), "Gyro rotationRateUnbiased" + m_Gyro.rotationRateUnbiased, debugStyle);
+      GUI.Label(new Rect(5, 925, 200, 40), "Gyro userAcceleration : " + m_Gyro.userAcceleration, debugStyle);
   }
 }
